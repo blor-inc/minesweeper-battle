@@ -1,11 +1,24 @@
 # minesweeper-battle
 
-## npm i in base dir and npm i again in client dir
-
-
+# PROJECT SETUP
+## npm install in base dir and npm install again in client dir
+```
+npm i
+cd client
+npm i
+```
 # run these scripts/command in the base dir
 
-## use npm run dev to run local server
-## use npm run server to only run server
+## To run local server + client together
+```
+npm run dev
+```
+## To only run server
+```
+npm run server
+```
 
-## use npm run client to only run client
+## To only run client
+``
+`npm run client
+```
