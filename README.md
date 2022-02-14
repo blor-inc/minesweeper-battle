@@ -7,7 +7,7 @@ npm i
 cd client
 npm i
 ```
-# run these scripts/command in the base dir
+# !!!Run these scripts/command in the base dir!!!
 
 ## To run local server + client together
 ```
@@ -19,6 +19,6 @@ npm run server
 ```
 
 ## To only run client
-``
-`npm run client
+```
+npm run client
 ```
