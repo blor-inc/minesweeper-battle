@@ -1,13 +1,15 @@
 class Board {
-  constructor(height, width) {
+  constructor(height, width, mineCount) {
     this.height = height
     this.width = width
     this.board = Array.from({ length: this.height }, () =>
       Array.from({ length: this.width }, () => new Tile(false)),
     )
+
+    this.#randomlyPopulateMines(mineCount)
   }
 
-  randomlyPopulateMines(n) {
+  #randomlyPopulateMines(n) {
     if (n < 0 || n > this.height * this.width) {
       throw `Impossible to populate ${n} mines in a ${this.height} by ${this.width} board.`
     }
@@ -103,9 +105,9 @@ class Tile {
   }
 }
 
+module.exports = { Board, Tile }
+
 if (require.main === module) {
-  const board = new Board(10, 50)
-  board.randomlyPopulateMines(50)
-  // console.log(board.toDetailedString())
+  const board = new Board(10, 50, 20)
   console.log(board.toString())
 }
