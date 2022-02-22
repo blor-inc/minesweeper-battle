@@ -20,10 +20,8 @@ class Board {
       }
     }
 
-    // console.log(this.mineLocations)
-
     this.mineLocations.forEach((ml) => {
-      const r = Math.floor(ml / this.height)
+      const r = Math.floor(ml / this.width)
       const c = ml % this.width
 
       this.board[r][c].setContainsMine(true)
@@ -106,8 +104,8 @@ class Tile {
 }
 
 if (require.main === module) {
-  const board = new Board(20, 20)
-  board.randomlyPopulateMines(250)
+  const board = new Board(10, 50)
+  board.randomlyPopulateMines(50)
   // console.log(board.toDetailedString())
   console.log(board.toString())
 }
