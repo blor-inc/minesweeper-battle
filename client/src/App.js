@@ -1,5 +1,6 @@
-import React from 'react'
-import './App.css'
+import React from 'react';
+import './App.css';
+import Board from './Board/Board';
 
 function App() {
   const [data, setData] = React.useState(null)
@@ -24,18 +25,19 @@ function App() {
   function populateGameBoard(gameState) {
     console.log(gameState)
     // TODO
-    return <div>Display Board Here</div>
+    return (
+      <Board data={gameState}/>
+    );
+    // return <div>Display Board Here</div>
   }
 
   return (
     <div className="App">
-      <header className="App-header">
-        <p>{!data ? 'Loading...' : data}</p>
-        <button hidden={gameState != null} onClick={newGame}>
-          New Game
-        </button>
-        {gameState != null && populateGameBoard(gameState)}
-      </header>
+      <p>{!data ? 'Loading...' : data}</p>
+      <button hidden={gameState != null} onClick={newGame}>
+        New Game
+      </button>
+      {gameState != null && populateGameBoard(gameState)}
     </div>
   )
 }

@@ -1,0 +1,16 @@
+.cell {
+  border: 2px solid #61dafb;
+  text-align: center;
+  border-radius: 5px;
+  height: 40px;
+  width: 40px;
+
+}
+
+.covered {
+  background-color: rgb(73, 73, 73);
+}
+
+.uncovered {
+  background-color: #000000;
+}

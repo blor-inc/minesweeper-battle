@@ -6,6 +6,7 @@ const PORT = process.env.PORT || 3001
 
 const app = express()
 
+app.use(express.json())
 app.get('/debug', (req, res) => {
   res.json({ message: 'Hello from server!' })
 })
@@ -29,6 +30,7 @@ app.post('/new-game', (req, res) => {
   console.log('/new-game')
   let gameId = Object.keys(games).length
   games[gameId] = new minesweeper.Board(10, 10, 10)
+  console.log(games[0]);
   res.json({
     gameId: gameId,
     boardHeight: games[gameId].height,
@@ -51,6 +53,7 @@ function getBoard(gameId) {
   )
 }
 
-app.get('/make-move', (req, res) => {
+app.post('/make-move', (req, res) => {
   // TODO
+  console.log('MAKE_MOVE REQ:', req.body);
 })
