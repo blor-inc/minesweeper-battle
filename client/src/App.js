@@ -3,15 +3,9 @@ import './App.css';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Home from './components/Home/Home';
+import Placeholder from './components/Placeholder/Placeholder';
 
 
-// function Xdd() {
-//   return (
-//     <div>
-//       Sheeesh
-//     </div>
-//   )
-// }
 function App() {
   return (
     <BrowserRouter>
@@ -20,7 +14,8 @@ function App() {
         <Route path="*" element={<Home />} />
 
         <Route path="/" element={<Home />} />
-        {/* <Route path="/xd" element={<Xdd />} /> */}
+        <Route path="/Placeholder" element={<Placeholder/>} />
+
       </Routes>
     </BrowserRouter>
   )
