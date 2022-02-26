@@ -1,7 +1,23 @@
-class Board {
+/** 
+ * This is the Minesweeper class
+ * 
+ * Properties:
+ * - height: the number of rows of the board
+ * - width: the number of columns of the board
+ * - gameOver: false while game is not over, true when over
+ * - gameWin: win condition; true only when game is won
+ * - board: 2D array of Tiles
+ * - mineLocations: array of mine locations, sequentially (not row/col coordinates, but single integer locations)
+ * 
+*/
+
+class Minesweeper {
   constructor(height, width, mineCount) {
     this.height = height
     this.width = width
+    this.gameOver = false
+    this.gameWin = false
+
     this.board = Array.from({ length: this.height }, () =>
       Array.from({ length: this.width }, () => new Tile(false)),
     )
@@ -9,6 +25,7 @@ class Board {
     this.#randomlyPopulateMines(mineCount)
   }
 
+  // Randomly assign locations of mines into mineLocations 
   #randomlyPopulateMines(n) {
     if (n < 0 || n > this.height * this.width) {
       throw `Impossible to populate ${n} mines in a ${this.height} by ${this.width} board.`
@@ -23,8 +40,7 @@ class Board {
     }
 
     this.mineLocations.forEach((ml) => {
-      const r = Math.floor(ml / this.width)
-      const c = ml % this.width
+      const [r, c] = this.#convertCoordinate(ml)
 
       this.board[r][c].setContainsMine(true)
 
@@ -44,6 +60,73 @@ class Board {
     })
   }
 
+  // Convert the mineLocations numbers into board coordinates
+  #convertCoordinate(location) {
+    const r = Math.floor(location / this.width)
+    const c = location % this.width
+    return [r, c]
+  }
+
+  // Check Tile identity (mine or number from 0-8), then change Tile to "reveal"
+  revealTile(row, col) {
+    const tile = this.board[row][col]
+
+    if (tile.containsMine) {
+
+      // If Tile is a mine, reveal all mines and set gameOver = true
+      this.mineLocations.forEach((ml) => {
+        const [r, c] = this.#convertCoordinate(ml)
+        this.board[r][c].isRevealed = true
+      })
+
+      this.board.gameOver = true
+      return
+    }
+
+    // If Tile is a non-zero number, reveal only that Tile
+    else if (tile.surroundingMineCount > 0) {
+      tile.isRevealed = true
+      return
+    }
+    
+    // If Tile is 0, reveal the entire area of 0's along with the bordering non-zero numbers
+    else if (tile.surroundingMineCount == 0) {
+      this.#revealSurroundingTiles(row, col)
+    }
+  }
+
+  // Recursively reveal Tiles as long as they are zero, or bordering non-zero values
+  #revealSurroundingTiles(row, col) {
+
+    for (let rr = row - 1; rr <= row + 1; rr++) {
+      for (let cc = col - 1; cc <= col + 1; cc++) {
+        
+        if (rr === row && cc === col) {
+          continue
+        }
+
+        if (rr < 0 || cc < 0 || rr >= this.height || cc >= this.width) {
+          continue
+        }
+
+        if (this.board[rr][cc].isRevealed) {
+          continue
+        }
+
+        if (this.board[rr][cc].surroundingMineCount > 0) {
+          this.board[rr][cc].isRevealed = true
+        }
+
+        else if (this.board[rr][cc].surroundingMineCount == 0) {
+          this.board[rr][cc].isRevealed = true
+          this.#revealSurroundingTiles(rr, cc)
+          
+        }
+      }
+    }
+  }
+
+  // convert this board object into a "detailed" string, including all fields
   toDetailedString() {
     const stringLines = [
       'Board',
@@ -62,6 +145,7 @@ class Board {
     return stringLines.join('\n')
   }
 
+  // convert this board object into a pretty grid which shows bombs and surroundingMineCounts
   toString() {
     const horizontalBorder = '-'.repeat(this.width * 2 + 1)
     const stringLines = [horizontalBorder]
@@ -85,6 +169,7 @@ class Board {
   }
 }
 
+// Tile class used by Board to represent each tile on a minesweeper board (see Board.board)
 class Tile {
   constructor(containsMine) {
     this.containsMine = containsMine
@@ -100,14 +185,19 @@ class Tile {
     this.containsMine = containsMine
   }
 
+  // print tile with all its properties
   toDetailedString() {
     return `[Tile containsMine:${this.containsMine} isRevealed:${this.isRevealed} surroundingMineCount:${this.surroundingMineCount}]`
   }
 }
 
-module.exports = { Board, Tile }
+module.exports = { Minesweeper, Tile }
 
 if (require.main === module) {
-  const board = new Board(10, 50, 20)
+  const board = new Minesweeper(10, 10, 99)
   console.log(board.toString())
+  console.log(board.toDetailedString())
+  board.revealTile(0,0)
+  console.log(board.toDetailedString())
+
 }
