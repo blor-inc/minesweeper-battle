@@ -6,6 +6,12 @@ const PORT = process.env.PORT || 3001
 
 const app = express()
 
+
+// for posting encoded params
+app.use(express.urlencoded({ extended: true }));
+// for posting json
+app.use(express.json());
+
 app.get('/debug', (req, res) => {
   res.json({ message: 'Hello from server!' })
 })
@@ -28,7 +34,8 @@ app.get('/debug-games', (req, res) => {
 app.post('/new-game', (req, res) => {
   console.log('/new-game')
   let gameId = Object.keys(games).length
-  games[gameId] = new minesweeper.Board(10, 10, 10)
+  games[gameId] = new minesweeper.Board(50, 50, 10)
+  console.log(games[0].toString());
   res.json({
     gameId: gameId,
     boardHeight: games[gameId].height,
@@ -51,6 +58,8 @@ function getBoard(gameId) {
   )
 }
 
-app.get('/make-move', (req, res) => {
+app.post('/make-move', (req, res) => {
   // TODO
+  console.log('MAKE_MOVE REQ:', req.body);
+  res.json({ games: 123 })
 })
