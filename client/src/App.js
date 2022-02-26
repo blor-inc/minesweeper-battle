@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import Board from './Board/Board';
+import Board from './components/Board/Board';
 
 function App() {
   const [data, setData] = React.useState(null)

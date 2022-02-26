@@ -1,7 +1,7 @@
 import React from "react";
 import './Board.scss'
 
-import Cell from "../components/Cell/Cell";
+import Cell from "../Cell/Cell";
 
 function Board(props) {
 
