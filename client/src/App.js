@@ -1,42 +1,23 @@
 import React from 'react';
 import './App.css';
-import Board from './components/Board/Board';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import Home from './components/Home/Home';
+import Placeholder from './components/Placeholder/Placeholder';
+
 
 function App() {
-  const [data, setData] = React.useState(null)
-  const [gameState, setGameState] = React.useState(null)
-
-  React.useEffect(() => {
-    fetch('/debug')
-      .then((res) => res.json())
-      .then((data) => setData(data.message))
-  }, [])
-
-  function newGame() {
-    fetch('/new-game', { method: 'POST' })
-      .then((res) => res.json())
-      .then((data) => {
-        setGameState(data)
-
-        console.log(data)
-      })
-  }
-
-  function populateGameBoard(gameState) {
-    console.log(gameState)
-    return (
-      <Board data={gameState}/>
-    );
-  }
-
   return (
-    <div className="App">
-      <p>{!data ? 'Loading...' : data}</p>
-      <button hidden={gameState != null} onClick={newGame}>
-        New Game
-      </button>
-      {gameState != null && populateGameBoard(gameState)}
-    </div>
+    <BrowserRouter>
+      <Routes>
+        {/* page not found */}
+        <Route path="*" element={<Home />} />
+
+        <Route path="/" element={<Home />} />
+        <Route path="/Placeholder" element={<Placeholder/>} />
+
+      </Routes>
+    </BrowserRouter>
   )
 }
 
