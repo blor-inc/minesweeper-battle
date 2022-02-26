@@ -24,11 +24,9 @@ function App() {
 
   function populateGameBoard(gameState) {
     console.log(gameState)
-    // TODO
     return (
       <Board data={gameState}/>
     );
-    // return <div>Display Board Here</div>
   }
 
   return (

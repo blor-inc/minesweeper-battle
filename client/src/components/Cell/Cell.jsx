@@ -1,17 +1,18 @@
 import React from "react";
-import './Cell.scss';
+import './Cell.css';
+
 
 
 function Cell(props) {
   // testing
-  function sheesh() {
-    fetch('/make-move', { 
+  function handleOnClick() {
+    fetch('/make-move', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
         // 'Content-Type': 'application/x-www-form-urlencoded',
       },
-      body: JSON.stringify({ username: 'example' }) 
+      body: JSON.stringify({ username: 'example' })
     })
     .then(response => response.json())
     .then(data => {
@@ -23,8 +24,8 @@ function Cell(props) {
   }
 
   return (
-    <div className={`cell ${props.data.isCovered ? "covered" : "uncovered"}`} onClick={sheesh}>
-      
+    <div className={`cell ${props.data.isCovered ? "covered" : "uncovered"}`} onClick={handleOnClick}>
+
     </div>
   )
 }
