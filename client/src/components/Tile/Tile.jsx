@@ -1,9 +1,9 @@
 import React from "react";
-import './Cell.css';
+import './Tile.css';
 
 
 
-function Cell(props) {
+function Tile(props) {
   // testing
   function handleOnClick() {
     fetch('/make-move', {
@@ -30,4 +30,4 @@ function Cell(props) {
   )
 }
 
-export default Cell;
+export default Tile;

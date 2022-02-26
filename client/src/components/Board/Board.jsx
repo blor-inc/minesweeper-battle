@@ -1,7 +1,7 @@
 import React from "react";
 import './Board.css'
 
-import Cell from "../Cell/Cell";
+import Tile from "../Tile/Tile";
 
 function Board(props) {
 
@@ -9,7 +9,7 @@ function Board(props) {
     <div className="board">
       {props.data.board.map((row) => {
         return row.map((cellData) => {
-          return <Cell data={ cellData }/>;
+          return <Tile data={ cellData }/>;
         })
       })}
     </div>
