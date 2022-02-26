@@ -32,12 +32,12 @@ function Home() {
       <button className='singlePlayerButton' hidden={gameState != null} onClick={newGame}>
         Single player
       </button>
-      <Link to={''}>
-      
+      <Link to='/Placeholder'>
+        <button className='MultiplayerButton' hidden={gameState != null}>
+          Multiplayer
+        </button>
       </Link>
-      <button className='MultiplayerButton' hidden={gameState != null} onClick={newGame}>
-        Multiplayer
-      </button>
+
       {gameState != null && populateGameBoard(gameState)}
     </div>
   )
