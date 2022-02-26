@@ -13,7 +13,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.get('/debug', (req, res) => {
-  res.json({ message: 'Hello from server!' })
+  res.json({ message: 'Minesweeper' })
 })
 
 app.listen(PORT, () => {
@@ -34,7 +34,7 @@ app.get('/debug-games', (req, res) => {
 app.post('/new-game', (req, res) => {
   console.log('/new-game')
   let gameId = Object.keys(games).length
-  games[gameId] = new minesweeper.Board(50, 50, 10)
+  games[gameId] = new minesweeper.Board(10, 10, 5)
   console.log(games[0].toString());
   res.json({
     gameId: gameId,
