@@ -34,7 +34,9 @@ app.get('/debug-games', (req, res) => {
 app.post('/new-game', (req, res) => {
   console.log('/new-game')
   let gameId = Object.keys(games).length
-  games[gameId] = new minesweeper.Board(10, 10, 35)
+
+  games[gameId] = new minesweeper.Minesweeper(50, 50, 10)
+
   console.log(games[0].toString());
   res.json({
     gameId: gameId,
