@@ -5,9 +5,12 @@ import Tile from "../Tile/Tile";
 
 function Board(props) {
 
-  return (
+  const tilePerRow = {
+    'grid-template-columns': `repeat(${props.data.board[0].length}, 1fr)`
+  };
 
-    <div className="board">
+  return (
+    <div className="board" style={tilePerRow}>
       {props.data.board.map((row) => {
         return row.map((cellData) => {
           return <Tile data={ cellData }/>;
