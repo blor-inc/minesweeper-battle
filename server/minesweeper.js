@@ -91,6 +91,7 @@ class Minesweeper {
     
     // If Tile is 0, reveal the entire area of 0's along with the bordering non-zero numbers
     else if (tile.surroundingMineCount == 0) {
+      tile.isRevealed = true
       this.#revealSurroundingTiles(row, col)
     }
   }
