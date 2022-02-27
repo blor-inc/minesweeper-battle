@@ -11,9 +11,9 @@ function Board(props) {
 
   return (
     <div className="board" style={tilePerRow}>
-      {props.data.board.map((row) => {
-        return row.map((cellData) => {
-          return <Tile data={ cellData }/>;
+      {props.data.board.map((row, rowIndex) => {
+        return row.map((cellData, colIndex) => {
+          return <Tile data={ cellData } key={(rowIndex + 1) * colIndex} position={[rowIndex, colIndex]}/>;
         })
       })}
     </div>

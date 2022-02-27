@@ -35,7 +35,7 @@ app.post('/new-game', (req, res) => {
   console.log('/new-game')
   let gameId = Object.keys(games).length
 
-  games[gameId] = new minesweeper.Minesweeper(50, 50, 10)
+  games[gameId] = new minesweeper.Minesweeper(12, 15, 20)
 
   console.log(games[0].toString());
   res.json({
