@@ -42,7 +42,7 @@ function Tile(props) {
       onClick={handleOnClick}
     >
       <div>
-      {tileEmoji(props.data)}
+        {tileEmoji(props.data)}
       </div>
     </div>
   )

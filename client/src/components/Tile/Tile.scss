@@ -1,9 +1,9 @@
 .cell {
-  border: 1px solid #3a3a3c;
+  border: 1px solid #000000;
   text-align: center;
   border-radius: 5px;
-  height: 45px;
-  width: 45px;
+  height: 35px;
+  width: 35px;
   display: flex;
   justify-content: center;
   align-content: center;
@@ -12,9 +12,9 @@
 }
 
 .covered {
-  background-color: #121212;
+  background-color: #474750;
 }
 
 .uncovered {
-  background-color: #474750;
+  background-color: #121212;
 }
