@@ -5,9 +5,9 @@ import './Tile.scss';
 
 function Tile(props) {
 
-  function tileEmoji(tileData) {
+  function tileDisplay(tileData) {
     if (tileData.containsMine) {
-      return '💣'
+      return '💣';
     } else if (tileData.surroundingMineCount) {
       return tileData.surroundingMineCount;
     }
@@ -42,7 +42,7 @@ function Tile(props) {
       onClick={handleOnClick}
     >
       <div>
-        {tileEmoji(props.data)}
+        {tileDisplay(props.data)}
       </div>
     </div>
   )
