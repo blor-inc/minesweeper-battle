@@ -18,7 +18,6 @@ function Tile(props) {
       gameId: props.gameId,
       position: props.position
     };
-    console.log('POSTGAMEDATA: ', JSON.stringify(postGameData))
     fetch('/make-move', {
       method: 'POST',
       headers: {

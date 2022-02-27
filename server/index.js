@@ -67,8 +67,6 @@ app.post('/make-move', (req, res) => {
   let game = games[gameId];
 
   game.revealTile(row, col);
-  console.log('GAME: ', game.toDetailedString())
-  console.log(getBoard(gameId))
   res.json({
     gameId,
     boardHeight: game.height,
