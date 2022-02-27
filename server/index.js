@@ -35,14 +35,14 @@ app.post('/new-game', (req, res) => {
   console.log('/new-game')
   let gameId = Object.keys(games).length
 
-  games[gameId] = new minesweeper.Minesweeper(50, 50, 10)
+  games[gameId] = new minesweeper.Minesweeper(12, 15, 20)
 
   console.log(games[0].toString());
   res.json({
-    gameId: gameId,
+    gameId,
     boardHeight: games[gameId].height,
     boardWidth: games[gameId].width,
-    board: getBoard(gameId),
+    board: getBoard(gameId)
   })
 })
 
@@ -61,7 +61,16 @@ function getBoard(gameId) {
 }
 
 app.post('/make-move', (req, res) => {
-  // TODO
-  console.log('MAKE_MOVE REQ:', req.body);
-  res.json({ games: 123 })
+  let gameId = req.body.gameId;
+  let row = req.body.position[0];
+  let col = req.body.position[1];
+  let game = games[gameId];
+
+  game.revealTile(row, col);
+  res.json({
+    gameId,
+    boardHeight: game.height,
+    boardWidth: game.width,
+    board: getBoard(gameId)
+  })
 })

@@ -1,16 +1,20 @@
 .cell {
-  border: 1px solid #3a3a3c;
+  border: 1px solid #000000;
   text-align: center;
   border-radius: 5px;
-  height: 30px;
-  width: 30px;
-
+  height: 35px;
+  width: 35px;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-direction: column;
+  cursor: pointer;
 }
 
 .covered {
-  background-color: #121212;
+  background-color: #474750;
 }
 
 .uncovered {
-  background-color: #1a1a1b;
+  background-color: #121212;
 }
