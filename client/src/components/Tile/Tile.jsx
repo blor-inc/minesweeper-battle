@@ -1,5 +1,6 @@
 import React from "react";
 import './Tile.scss';
+import socket from '../../socket/socket';
 
 
 
@@ -18,20 +19,9 @@ function Tile(props) {
       gameId: props.gameId,
       position: props.position
     };
-    fetch('/make-move', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-        // 'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: JSON.stringify(postGameData)
-    })
-    .then(response => response.json())
-    .then(data => {
+
+    socket.emit('sheesh', postGameData, (data) => {
       props.changeBoardData(data);
-    })
-    .catch((error) => {
-      console.error('Error: ', error);
     });
   }
 

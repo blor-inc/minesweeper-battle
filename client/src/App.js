@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Home from './components/Home/Home';
 import Placeholder from './components/Placeholder/Placeholder';
-
+import Board from './components/Board/Board';
 
 function App() {
   return (
@@ -15,7 +15,7 @@ function App() {
 
         <Route path="/" element={<Home />} />
         <Route path="/Placeholder" element={<Placeholder/>} />
-
+        <Route path="/multi/:id" element={<Board />} />
       </Routes>
     </BrowserRouter>
   )
