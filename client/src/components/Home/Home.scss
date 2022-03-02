@@ -14,7 +14,7 @@
   font-size: 80px;
 }
 
-.singlePlayerButton, .MultiplayerButton {
+.singlePlayerButton, .MultiplayerButton, .Co-OpButton {
   padding: 15px 30px;
   font-size: 20px;
   transition: all .5s ease;
@@ -26,12 +26,12 @@
   outline: none;
 }
 
-.singlePlayerButton:hover, .MultiplayerButton:hover {
+.singlePlayerButton:hover, .MultiplayerButton:hover, .Co-OpButton:hover{
   cursor: pointer;
   color: #001F3F;
   background-color: #fff;
 }
 
-.singlePlayerButton {
+.singlePlayerButton, .Co-OpButton{
   margin-bottom: 30px;
 }

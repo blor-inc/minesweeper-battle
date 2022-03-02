@@ -1,47 +1,44 @@
 import React from 'react';
 import './Home.scss';
-import Board from '../Board/Board';
 import { Link } from 'react-router-dom';
-function Home() {
-  const [data, setData] = React.useState(null)
-  const [gameState, setGameState] = React.useState(null)
 
-  React.useEffect(() => {
-    fetch('/debug')
-      .then((res) => res.json())
-      .then((data) => setData(data.message))
-  }, [])
+import socket from '../../socket/socket';
+
+function Home() {
+  socket.on("connect", () => {
+    console.log(socket.id);
+  });
 
   function newGame() {
-    fetch('/new-game', { method: 'POST' })
+    fetch('/create-game', { method: 'POST' })
       .then((res) => res.json())
       .then((data) => {
-        setGameState(data)
+        window.location.href=`/coop/${data.gameId}`; 
       })
-  }
-
-  function populateGameBoard(gameState) {
-    return (
-      <Board data={gameState}/>
-    );
-  }
+      .catch(err => (
+        console.log(err)
+      ))
+  };
 
   return (
     <div className="Home">
-      <p className='Title'>{!data ? 'Loading...' : data}</p>
-      <button className='singlePlayerButton' hidden={gameState != null} onClick={newGame}>
-        Single player
+      <p className='Title'>{'Minesweeper'}</p>
+      <Link to='/Placeholder'>
+        <button className='singlePlayerButton'onClick={newGame}>
+          Single player
+        </button>
+      </Link>
+      <button className='Co-OpButton' onClick={newGame}>
+        Co-Op Mode
       </button>
       <Link to='/Placeholder'>
-        <button className='MultiplayerButton' hidden={gameState != null}>
+        <button className='MultiplayerButton'>
           Multiplayer
         </button>
       </Link>
 
-      {gameState != null && populateGameBoard(gameState)}
     </div>
   )
 };
-
 
 export default Home;
