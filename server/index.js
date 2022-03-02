@@ -21,10 +21,9 @@ app.get('/debug', (req, res) => {
 
 const games = {};
 
+
 io.on("connection", (socket) => {
-  console.log('Server socket id: ', socket.id);
-  socket.on('games', (data, cb) => {
-    console.log(data);
+  socket.on('modifyGameState', (data) => {
     let gameId = data.gameId;
     let row = data.position[0];
     let col = data.position[1];
@@ -37,7 +36,8 @@ io.on("connection", (socket) => {
       boardWidth: game.width,
       board: getBoard(gameId)
     }
-    cb(newBoardState);
+
+    io.emit('returnUpdatedGameState', newBoardState);
   })
 });
 

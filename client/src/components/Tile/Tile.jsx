@@ -20,9 +20,10 @@ function Tile(props) {
       position: props.position
     };
 
-    socket.emit('games', emitGameData, (data) => {
-      props.changeBoardData(data);
-    });
+    socket.emit('modifyGameState', emitGameData);
+    socket.on('returnUpdatedGameState', (data) => {
+      props.changeBoardData(data)
+    })
   }
 
   return (
