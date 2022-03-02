@@ -5,9 +5,8 @@ import Tile from "../Tile/Tile";
 
 function Board(props) {
   let { id } = useParams();
-  console.log('ID: ', id);
-  console.log('ALL BOARD PROPS: ', props);
 
+  // maybe have a default state
   const [data, setData] = useState(null);
 
   React.useEffect(() => {

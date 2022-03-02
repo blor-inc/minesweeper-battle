@@ -15,12 +15,12 @@ function Tile(props) {
   }
 
   function handleOnClick() {
-    let postGameData = {
+    let emitGameData = {
       gameId: props.gameId,
       position: props.position
     };
 
-    socket.emit('sheesh', postGameData, (data) => {
+    socket.emit('games', emitGameData, (data) => {
       props.changeBoardData(data);
     });
   }

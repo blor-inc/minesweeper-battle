@@ -19,54 +19,50 @@ app.get('/debug', (req, res) => {
   res.json({ message: 'Minesweeper' })
 })
 
+const games = {};
+
 io.on("connection", (socket) => {
   console.log('Server socket id: ', socket.id);
-  socket.on('sheesh', (data, cb) => {
+  socket.on('games', (data, cb) => {
     console.log(data);
     let gameId = data.gameId;
     let row = data.position[0];
     let col = data.position[1];
-    let game = gamesById[gameId];
+    let game = games[gameId];
 
     game.revealTile(row, col);
     let newBoardState = {
       gameId,
       boardHeight: game.height,
       boardWidth: game.width,
-      board: getBoardById(gameId)
+      board: getBoard(gameId)
     }
     cb(newBoardState);
   })
 });
 
-
-
-
-const games = {};
-
-const gamesById = {};
 app.get('/coop/:id', (req, res) => {
   console.log('ID: ', req.params.id);
   
   let gameId = req.params.id;
-  let game = gamesById[gameId];
+  let game = games[gameId];
   res.json({
     gameId,
     boardHeight: game.height,
     boardWidth: game.width,
-    board: getBoardById(gameId)
+    board: getBoard(gameId)
   })
 })
 
 app.post('/create-game', (req, res) => {
   let gameUUID = uuidv4();
-  gamesById[gameUUID] = new minesweeper.Minesweeper(12, 15, 20);
+  games[gameUUID] = new minesweeper.Minesweeper(12, 15, 20);
   let gameId = gameUUID;
   res.json({gameId});
 });
 
-function getBoardById(gameId) {
-  return gamesById[gameId].board.map((row) =>
+function getBoard(gameId) {
+  return games[gameId].board.map((row) =>
     row.map((tile) => {
       return {
         isCovered: !tile.isRevealed,
@@ -87,6 +83,5 @@ app.get('/debug-games', (req, res) => {
   })
   res.json({ games: games })
 })
-
 
 httpServer.listen(PORT);
