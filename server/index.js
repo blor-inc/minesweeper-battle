@@ -1,8 +1,9 @@
 const express = require('express');
 const { createServer } = require("http");
 const { Server } = require("socket.io");
-const { v4: uuidv4 } = require('uuid');
 const minesweeper = require('./minesweeper');
+
+const { nanoid } = require('nanoid')
 
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -55,7 +56,7 @@ app.get('/coop/:id', (req, res) => {
 })
 
 app.post('/create-game', (req, res) => {
-  let gameUUID = uuidv4();
+  let gameUUID = nanoid(10);
   games[gameUUID] = new minesweeper.Minesweeper(12, 15, 20);
   let gameId = gameUUID;
   res.json({gameId});
