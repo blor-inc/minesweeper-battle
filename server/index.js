@@ -37,7 +37,7 @@ app.post('/new-game', (req, res) => {
 
   games[gameId] = new minesweeper.Minesweeper(12, 15, 20)
 
-  console.log(games[0].toString());
+  console.log(games[gameId].toString());
   res.json({
     gameId,
     boardHeight: games[gameId].height,
