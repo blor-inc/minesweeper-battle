@@ -45,7 +45,7 @@ io.on("connection", (socket) => {
 const games = {};
 
 const gamesById = {};
-app.get('/multi/:id', (req, res) => {
+app.get('/coop/:id', (req, res) => {
   console.log('ID: ', req.params.id);
   
   let gameId = req.params.id;
@@ -61,7 +61,8 @@ app.get('/multi/:id', (req, res) => {
 app.post('/create-game', (req, res) => {
   let gameUUID = uuidv4();
   gamesById[gameUUID] = new minesweeper.Minesweeper(12, 15, 20);
-  console.log(gameUUID);
+  let gameId = gameUUID;
+  res.json({gameId});
 });
 
 function getBoardById(gameId) {

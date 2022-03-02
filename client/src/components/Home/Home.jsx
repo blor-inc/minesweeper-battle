@@ -1,41 +1,44 @@
 import React from 'react';
 import './Home.scss';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import socket from '../../socket/socket';
 
 function Home() {
   socket.on("connect", () => {
-    console.log(socket.id); // x8WIv7-mJelg7on_ALbx
+    console.log(socket.id);
   });
 
   function newGame() {
     fetch('/create-game', { method: 'POST' })
+      .then((res) => res.json())
+      .then((data) => {
+        window.location.href=`/coop/${data.gameId}`; 
+      })
       .catch(err => (
         console.log(err)
       ))
-  }
-
-
+  };
 
   return (
     <div className="Home">
       <p className='Title'>{'Minesweeper'}</p>
-      {/* <button className='singlePlayerButton' hidden={gameState != null} onClick={newGame}>
-        Single player
-      </button> */}
-      <button className='MultiplayerButton' onClick={newGame}>
-        Multiplayer
+      <Link to='/Placeholder'>
+        <button className='singlePlayerButton'onClick={newGame}>
+          Single player
+        </button>
+      </Link>
+      <button className='Co-OpButton' onClick={newGame}>
+        Co-Op Mode
       </button>
-      {/* <Link to='/Placeholder'>
-        <button className='MultiplayerButton' hidden={gameState != null}>
+      <Link to='/Placeholder'>
+        <button className='MultiplayerButton'>
           Multiplayer
         </button>
-      </Link> */}
+      </Link>
 
     </div>
   )
 };
-
 
 export default Home;

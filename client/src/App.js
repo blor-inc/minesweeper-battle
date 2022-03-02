@@ -15,7 +15,7 @@ function App() {
 
         <Route path="/" element={<Home />} />
         <Route path="/Placeholder" element={<Placeholder/>} />
-        <Route path="/multi/:id" element={<Board />} />
+        <Route path="/coop/:id" element={<Board />} />
       </Routes>
     </BrowserRouter>
   )

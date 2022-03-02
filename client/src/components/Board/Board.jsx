@@ -12,7 +12,7 @@ function Board(props) {
 
   React.useEffect(() => {
     console.log('its happending')
-    fetch(`/multi/${ id }`)
+    fetch(`/coop/${ id }`)
       .then((res) => res.json())
       .then((data) => setData(data))
   }, [id])
