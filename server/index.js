@@ -2,6 +2,7 @@ const express = require('express');
 const { createServer } = require("http");
 const { Server } = require("socket.io");
 const { nanoid } = require('nanoid')
+const path = require('path');
 
 const minesweeper = require('./minesweeper');
 
