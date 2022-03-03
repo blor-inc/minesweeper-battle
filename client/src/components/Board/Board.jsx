@@ -9,10 +9,10 @@ function Board(props) {
   const [data, setData] = useState(null);
 
   React.useEffect(() => {
-    console.log('its happending')
     fetch(`/coop/${ props.id }`)
       .then((res) => res.json())
       .then((data) => setData(data))
+      .catch((err) => console.error(err))
   }, [props.id])
 
   let tilePerRow;
@@ -23,15 +23,15 @@ function Board(props) {
   }
 
   return (
-    !data ? 'Loading...' : 
+    !data ? 'Loading...' :
     <div className="board" style={tilePerRow}>
       {data.board.map((row, rowIndex) => {
         return row.map((cellData, colIndex) => {
           return (
-            <Tile 
-              data={ cellData } 
-              key={ (rowIndex + 1) * colIndex } 
-              position={ [rowIndex, colIndex] } 
+            <Tile
+              data={ cellData }
+              key={ (rowIndex + 1) * colIndex }
+              position={ [rowIndex, colIndex] }
               gameId={ data.gameId }
               changeBoardData={ setData }
             />
