@@ -12,6 +12,8 @@ const app = express();
 const httpServer = createServer(app);
 const io = new Server(httpServer);
 
+console.log("I'm alive")
+
 app.use(express.static(path.resolve(__dirname, '../client/build')));
 
 
