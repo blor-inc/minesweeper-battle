@@ -42,8 +42,10 @@ io.on("connection", (socket) => {
       gameId,
       boardHeight: game.height,
       boardWidth: game.width,
-      board: getBoard(gameId)
+      board: getBoard(gameId),
+      endGame: game.getGameState(),
     }
+    console.log(newBoardState)
     io.sockets.in(gameId).emit('returnUpdatedGameState', newBoardState)
   })
 });
@@ -53,12 +55,15 @@ app.get('/coop/:id', (req, res) => {
   
   let gameId = req.params.id;
   let game = games[gameId];
-  res.json({
+  let gameState = {
     gameId,
     boardHeight: game.height,
     boardWidth: game.width,
-    board: getBoard(gameId)
-  })
+    board: getBoard(gameId),
+    endGame: game.getGameState(),
+  }
+  console.log(gameState)
+  res.json(gameState)
 })
 
 app.post('/create-game', (req, res) => {
