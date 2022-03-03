@@ -4,6 +4,7 @@
  * Properties:
  * - height: the number of rows of the board
  * - width: the number of columns of the board
+ * - remainingTileCount: numbers of tiles left uncovered. When 0, game ends and player wins
  * - gameOver: false while game is not over, true when over
  * - gameWin: win condition; true only when game is won
  * - board: 2D array of Tiles
@@ -15,6 +16,7 @@ class Minesweeper {
   constructor(height, width, mineCount) {
     this.height = height
     this.width = width
+    this.remainingTileCount = height * width - mineCount
     this.gameOver = false
     this.gameWin = false
 
@@ -23,6 +25,22 @@ class Minesweeper {
     )
 
     this.#randomlyPopulateMines(mineCount)
+  }
+
+  // Returns an object with booleans of gameOver and gameWin (True, True == win; True, False == lose)
+  getGameState(){
+    return {
+      gameOver: this.gameOver,
+      gameWin: this.gameWin
+    }
+  }
+
+  // Checks whether there are remaining tiles to be uncovered, change game state if all tiles are uncovered
+  #setGameState() {
+    if (this.remainingTileCount == 0){
+      this.gameOver = true
+      this.gameWin = true
+    }
   }
 
   // Randomly assign locations of mines into mineLocations 
@@ -79,21 +97,24 @@ class Minesweeper {
         this.board[r][c].isRevealed = true
       })
 
-      this.board.gameOver = true
+      this.gameOver = true
       return
     }
 
     // If Tile is a non-zero number, reveal only that Tile
     else if (tile.surroundingMineCount > 0) {
       tile.isRevealed = true
-      return
+      this.remainingTileCount--
     }
     
     // If Tile is 0, reveal the entire area of 0's along with the bordering non-zero numbers
     else if (tile.surroundingMineCount == 0) {
       tile.isRevealed = true
+      this.remainingTileCount--
       this.#revealSurroundingTiles(row, col)
     }
+
+    this.#setGameState()
   }
 
   // Recursively reveal Tiles as long as they are zero, or bordering non-zero values
@@ -116,10 +137,12 @@ class Minesweeper {
 
         if (this.board[rr][cc].surroundingMineCount > 0) {
           this.board[rr][cc].isRevealed = true
+          this.remainingTileCount--
         }
 
         else if (this.board[rr][cc].surroundingMineCount == 0) {
           this.board[rr][cc].isRevealed = true
+          this.remainingTileCount--
           this.#revealSurroundingTiles(rr, cc)
           
         }
@@ -168,6 +191,31 @@ class Minesweeper {
     stringLines.push(horizontalBorder)
     return stringLines.join('\n')
   }
+
+  // for testing purposes; board displays according to each Tile's reveal status
+  toRealisticString() {
+    const horizontalBorder = '-'.repeat(this.width * 2 + 1)
+    const stringLines = [horizontalBorder]
+
+    this.board.forEach((row) => {
+      const currentRow = []
+
+      row.forEach((tile) => {
+        if (tile.containsMine && tile.isRevealed) {
+          currentRow.push('x')
+        } else if (!tile.isRevealed) {
+          currentRow.push(' ')
+        } else {
+          currentRow.push(tile.surroundingMineCount)
+        }
+      })
+
+      stringLines.push('|' + currentRow.join('|') + '|')
+    })
+
+    stringLines.push(horizontalBorder)
+    return stringLines.join('\n')
+  }
 }
 
 // Tile class used by Board to represent each tile on a minesweeper board (see Board.board)
@@ -195,10 +243,37 @@ class Tile {
 module.exports = { Minesweeper, Tile }
 
 if (require.main === module) {
-  const board = new Minesweeper(10, 10, 99)
-  console.log(board.toString())
-  console.log(board.toDetailedString())
-  board.revealTile(0,0)
-  console.log(board.toDetailedString())
+  const board = new Minesweeper(5, 5, 25)
+  
+  console.log(board.toRealisticString())
+  console.log(board.remainingTileCount)
 
+  const readline = require('readline')
+  const inquirer = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+  })
+
+  var gameStart = function () {
+    inquirer.question("Enter coordinates: ", (input) => {
+      if (input == 'exit'){
+        return readline.close()
+      }
+
+      const coordinates = input.trim().split(" ").map(numStr => parseInt(numStr))
+
+      console.log(coordinates)
+
+      board.revealTile(coordinates[0], coordinates[1])
+
+      console.log(board.toRealisticString())
+      console.log(board.getGameState())
+      console.log(board.remainingTileCount)
+
+
+      gameStart()
+    })
+  }
+  
+  gameStart()
 }
