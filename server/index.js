@@ -62,9 +62,15 @@ app.get('/coop/:id', (req, res) => {
 })
 
 app.post('/create-game', (req, res) => {
-  let gameUUID = nanoid(10);
-  games[gameUUID] = new minesweeper.Minesweeper(12, 15, 20);
-  let gameId = gameUUID;
+  let randomId = nanoid(10);
+
+  // No way this happens but....
+  if (randomId in games) {
+    randomId = nanoid(10);
+  }
+
+  games[randomId] = new minesweeper.Minesweeper(12, 15, 20);
+  let gameId = randomId;
   res.json({gameId});
 });
 
