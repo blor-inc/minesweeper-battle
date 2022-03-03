@@ -1,9 +1,9 @@
 const express = require('express');
 const { createServer } = require("http");
 const { Server } = require("socket.io");
-const minesweeper = require('./minesweeper');
-
 const { nanoid } = require('nanoid')
+
+const minesweeper = require('./minesweeper');
 
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -24,7 +24,14 @@ const games = {};
 
 
 io.on("connection", (socket) => {
+
+  socket.on('joinRoom', (room) => {
+    socket.join(room)
+  });
+
   socket.on('modifyGameState', (data) => {
+
+    // separate this into its own function later....maybe in a diff file
     let gameId = data.gameId;
     let row = data.position[0];
     let col = data.position[1];
@@ -37,8 +44,7 @@ io.on("connection", (socket) => {
       boardWidth: game.width,
       board: getBoard(gameId)
     }
-
-    io.emit('returnUpdatedGameState', newBoardState);
+    io.sockets.in(gameId).emit('returnUpdatedGameState', newBoardState)
   })
 });
 

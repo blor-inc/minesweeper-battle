@@ -17,7 +17,8 @@ function Tile(props) {
   function handleOnClick() {
     let emitGameData = {
       gameId: props.gameId,
-      position: props.position
+      position: props.position,
+      roomId: props.gameId
     };
 
     socket.emit('modifyGameState', emitGameData);

@@ -2,12 +2,7 @@ import React from 'react';
 import './Home.scss';
 import { Link } from 'react-router-dom';
 
-import socket from '../../socket/socket';
-
 function Home() {
-  socket.on("connect", () => {
-    console.log(socket.id);
-  });
 
   function newGame() {
     fetch('/create-game', { method: 'POST' })
