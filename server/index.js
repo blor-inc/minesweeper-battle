@@ -12,7 +12,7 @@ const app = express();
 const httpServer = createServer(app);
 const io = new Server(httpServer);
 
-app.use(express.static(path.resolve(__dirname, '../client/build')));
+app.use(express.static(path.join(__dirname, '../client/build')));
 // for posting encoded params
 app.use(express.urlencoded({ extended: true }));
 // for posting json
