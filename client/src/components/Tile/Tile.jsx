@@ -14,6 +14,10 @@ function Tile(props) {
     }
   }
 
+  socket.on('returnUpdatedGameState', (data) => {
+    props.changeBoardData(data)
+  })
+
   function handleOnClick() {
     let emitGameData = {
       gameId: props.gameId,
@@ -22,9 +26,6 @@ function Tile(props) {
     };
 
     socket.emit('modifyGameState', emitGameData);
-    socket.on('returnUpdatedGameState', (data) => {
-      props.changeBoardData(data)
-    })
   }
 
   return (
