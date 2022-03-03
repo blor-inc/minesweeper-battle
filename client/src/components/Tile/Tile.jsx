@@ -17,12 +17,14 @@ function Tile(props) {
   function handleOnClick() {
     let emitGameData = {
       gameId: props.gameId,
-      position: props.position
+      position: props.position,
+      roomId: props.gameId
     };
 
-    socket.emit('games', emitGameData, (data) => {
-      props.changeBoardData(data);
-    });
+    socket.emit('modifyGameState', emitGameData);
+    socket.on('returnUpdatedGameState', (data) => {
+      props.changeBoardData(data)
+    })
   }
 
   return (

@@ -1,20 +1,19 @@
 import React, {useState} from "react";
 import './Board.scss'
-import { useParams } from "react-router-dom";
 import Tile from "../Tile/Tile";
 
 function Board(props) {
-  let { id } = useParams();
+
 
   // maybe have a default state
   const [data, setData] = useState(null);
 
   React.useEffect(() => {
     console.log('its happending')
-    fetch(`/coop/${ id }`)
+    fetch(`/coop/${ props.id }`)
       .then((res) => res.json())
       .then((data) => setData(data))
-  }, [id])
+  }, [props.id])
 
   let tilePerRow;
   if (data !== null) {

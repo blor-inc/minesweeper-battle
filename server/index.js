@@ -1,7 +1,8 @@
 const express = require('express');
 const { createServer } = require("http");
 const { Server } = require("socket.io");
-const { v4: uuidv4 } = require('uuid');
+const { nanoid } = require('nanoid')
+
 const minesweeper = require('./minesweeper');
 
 const PORT = process.env.PORT || 3001;
@@ -21,10 +22,16 @@ app.get('/debug', (req, res) => {
 
 const games = {};
 
+
 io.on("connection", (socket) => {
-  console.log('Server socket id: ', socket.id);
-  socket.on('games', (data, cb) => {
-    console.log(data);
+
+  socket.on('joinRoom', (room) => {
+    socket.join(room)
+  });
+
+  socket.on('modifyGameState', (data) => {
+
+    // separate this into its own function later....maybe in a diff file
     let gameId = data.gameId;
     let row = data.position[0];
     let col = data.position[1];
@@ -37,7 +44,7 @@ io.on("connection", (socket) => {
       boardWidth: game.width,
       board: getBoard(gameId)
     }
-    cb(newBoardState);
+    io.sockets.in(gameId).emit('returnUpdatedGameState', newBoardState)
   })
 });
 
@@ -55,9 +62,15 @@ app.get('/coop/:id', (req, res) => {
 })
 
 app.post('/create-game', (req, res) => {
-  let gameUUID = uuidv4();
-  games[gameUUID] = new minesweeper.Minesweeper(12, 15, 20);
-  let gameId = gameUUID;
+  let randomId = nanoid(10);
+
+  // No way this happens but....
+  if (randomId in games) {
+    randomId = nanoid(10);
+  }
+
+  games[randomId] = new minesweeper.Minesweeper(12, 15, 20);
+  let gameId = randomId;
   res.json({gameId});
 });
 
