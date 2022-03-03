@@ -9,7 +9,12 @@ function Board(props) {
   const [data, setData] = useState(null);
 
   React.useEffect(() => {
-    fetch(`/coop/${ props.id }`)
+    fetch(`/coop/${ props.id }`, {
+      headers : {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      }
+    })
       .then((res) => res.json())
       .then((data) => setData(data))
       .catch((err) => console.error(err))
