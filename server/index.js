@@ -14,9 +14,7 @@ const io = new Server(httpServer);
 
 app.use(express.static(path.resolve(__dirname, '../client/build')));
 
-app.get('*', function(request, response) {
-  response.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
-});
+
 // for posting encoded params
 app.use(express.urlencoded({ extended: true }));
 // for posting json
@@ -102,5 +100,9 @@ app.get('/debug-games', (req, res) => {
   })
   res.json({ games: games })
 })
+
+app.get('*', function(request, response) {
+  response.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
+});
 
 httpServer.listen(PORT);
