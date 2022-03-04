@@ -10,11 +10,11 @@ function App() {
     <BrowserRouter>
       <Routes>
         {/* page not found */}
-        <Route path="*" element={<Home />} />
-
+        {/* <Route path="*" element={<Home />} /> */}
         <Route path="/" element={<Home />} />
         <Route path="/Placeholder" element={<Placeholder/>} />
-        <Route path="/coop/:id" element={<CoOpGame />} />
+        {/* <Route path="/CoOpGame" element={<CoOpGame />} /> */}
+        <Route path="/CoOpGame/:gameId" element={<CoOpGame />} />
       </Routes>
     </BrowserRouter>
   )

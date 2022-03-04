@@ -9,7 +9,7 @@ function Board(props) {
   const [data, setData] = useState(null);
 
   React.useEffect(() => {
-    fetch(`/coop/${ props.id }`)
+    fetch(`/get-coop/${props.id}`)
       .then((res) => res.json())
       .then((data) => setData(data))
   }, [props.id])

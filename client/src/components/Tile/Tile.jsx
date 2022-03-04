@@ -2,8 +2,6 @@ import React from "react";
 import './Tile.scss';
 import socket from '../../socket/socket';
 
-
-
 function Tile(props) {
 
   function tileDisplay(tileData) {

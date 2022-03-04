@@ -2,12 +2,13 @@
   "name": "minesweeper-battle",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "nodemon server/index.js",
-    "client": "npm start --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "server": "nodemon server",
+    "client": "npm start --prefix client --port 3001",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "start": "nodemon server",
+    "build": "cd client/ && npm install && npm run build"
   },
   "repository": {
     "type": "git",
