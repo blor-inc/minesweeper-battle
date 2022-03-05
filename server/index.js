@@ -26,7 +26,6 @@ app.get('/debug', (req, res) => {
 
 const games = {};
 
-
 io.on("connection", (socket) => {
 
   socket.on('joinRoom', (room) => {
@@ -49,7 +48,6 @@ io.on("connection", (socket) => {
       board: getBoard(gameId),
       endGame: game.getGameState(),
     }
-    console.log(newBoardState)
     io.sockets.in(gameId).emit('returnUpdatedGameState', newBoardState)
   })
 });
@@ -66,7 +64,6 @@ app.get('/get-coop/:id', (req, res) => {
     board: getBoard(gameId),
     endGame: game.getGameState(),
   }
-  console.log(gameState)
   res.json(gameState)
 })
 

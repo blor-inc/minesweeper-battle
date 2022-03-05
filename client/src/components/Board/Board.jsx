@@ -22,7 +22,6 @@ function Board(props) {
   }
 
   function getGameOverString(endGameState) {
-    console.log(endGameState)
     if (!endGameState.gameOver) {
       return '';
     }
