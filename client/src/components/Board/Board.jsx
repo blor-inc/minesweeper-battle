@@ -9,7 +9,7 @@ function Board(props) {
   const [data, setData] = useState(null);
 
   React.useEffect(() => {
-    fetch(`/coop/${ props.id }`)
+    fetch(`/get-coop/${ props.id }`)
       .then((res) => res.json())
       .then((data) => setData(data))
   }, [props.id])
@@ -22,7 +22,6 @@ function Board(props) {
   }
 
   function getGameOverString(endGameState) {
-    console.log(endGameState)
     if (!endGameState.gameOver) {
       return '';
     }
@@ -37,16 +36,16 @@ function Board(props) {
   return (
     <>
       {!data ? 'Loading...' : getGameOverString(data.endGame)}
-  
-      {!data ? 'Loading...' : 
+
+      {!data ? 'Loading...' :
       <div className="board" style={tilePerRow}>
         {data.board.map((row, rowIndex) => {
           return row.map((cellData, colIndex) => {
             return (
-              <Tile 
-                data={ cellData } 
-                key={ (rowIndex + 1) * colIndex } 
-                position={ [rowIndex, colIndex] } 
+              <Tile
+                data={ cellData }
+                key={ (rowIndex + 1) * colIndex }
+                position={ [rowIndex, colIndex] }
                 gameId={ data.gameId }
                 changeBoardData={ setData }
               />

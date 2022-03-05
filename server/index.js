@@ -2,6 +2,7 @@ const express = require('express');
 const { createServer } = require("http");
 const { Server } = require("socket.io");
 const { nanoid } = require('nanoid')
+const path = require('path');
 
 const minesweeper = require('./minesweeper');
 
@@ -16,12 +17,14 @@ app.use(express.urlencoded({ extended: true }));
 // for posting json
 app.use(express.json());
 
+// Priority serve any static files.
+app.use(express.static(path.resolve(__dirname, '../client/build')));
+
 app.get('/debug', (req, res) => {
   res.json({ message: 'Minesweeper' })
 })
 
 const games = {};
-
 
 io.on("connection", (socket) => {
 
@@ -45,14 +48,13 @@ io.on("connection", (socket) => {
       board: getBoard(gameId),
       endGame: game.getGameState(),
     }
-    console.log(newBoardState)
     io.sockets.in(gameId).emit('returnUpdatedGameState', newBoardState)
   })
 });
 
-app.get('/coop/:id', (req, res) => {
+app.get('/get-coop/:id', (req, res) => {
   console.log('ID: ', req.params.id);
-  
+
   let gameId = req.params.id;
   let game = games[gameId];
   let gameState = {
@@ -62,7 +64,6 @@ app.get('/coop/:id', (req, res) => {
     board: getBoard(gameId),
     endGame: game.getGameState(),
   }
-  console.log(gameState)
   res.json(gameState)
 })
 
@@ -101,5 +102,9 @@ app.get('/debug-games', (req, res) => {
   })
   res.json({ games: games })
 })
+
+app.get('*', function (request, response) {
+  response.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
+});
 
 httpServer.listen(PORT);
