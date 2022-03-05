@@ -15,7 +15,7 @@ function CoOpGame() {
 
   return (
     <div>
-      <h5>http://localhost:3000/coop/{id}</h5>
+      <h5>Room ID: {id}</h5>
       <Board id={id}/>
     </div>
   );
